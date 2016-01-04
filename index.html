@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Maze Game</title>
+    <style>body { padding: 0; margin: 0; background: #4b1048 } </style>
+    <script src="js/phaser.min.js"></script>
+    <script src="js/Boot.js"></script>
+    <script src="js/Preloader.js"></script>
+    <script src="js/MainMenu.js"></script>
+    <script src="js/Howto.js"></script>
+    <script src="js/Game.js"></script>   
+</head>
+<body>
+<script>
+(function() {
+    var game = new Phaser.Game(640, 640, Phaser.AUTO, 'game');
+    game.state.add('Boot', Maze.Boot);
+    game.state.add('Preloader', Maze.Preloader);
+    game.state.add('MainMenu', Maze.MainMenu);
+    game.state.add('Howto', Maze.Howto);
+    game.state.add('Game', Maze.Game);
+    game.state.start('Boot');
+})();
+</script>
+</body>
+</html>
+
+<!-- var Game = function() {
+    this._width = window.innerWidth;
+    this._height = window.innerHeight;
+    this.game = new Phaser.Game(this._width, this._height, Phaser.AUTO, '', {
+        preload: this.preload,
+        create: this.create,
+        update: this.update
+    });
+}
+Game.prototype = {
+    preload: function() {
+    },
+    create: function() {
+    },
+    update: function() {
+    }
+}
+new Game(); -->
