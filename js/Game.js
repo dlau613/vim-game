@@ -69,10 +69,6 @@ Maze.Game.prototype = {
 		// this.Maze.body.setSize(18, 18);
 		// this.Maze.body.bounce.set(0.3, 0.3);
 
-		// this.initLevels();
-		// this.showLevel(1);
-		// this.keys = this.game.input.keyboard.createCursorKeys();
-
 		// Maze._player = this.Maze;
 		// window.addEventListener("deviceorientation", this.handleOrientation, true);
 
