@@ -6,7 +6,7 @@ Maze.Preloader.prototype = {
 		//this.load.setPreloadSprite(this.preloadBar);
 		
 
-		this.load.tilemap('maze', 'img/mazes.json', null, Phaser.Tilemap.TILED_JSON);
+		this.load.tilemap('maze', 'img/mazes1.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('tile', 'img/tile.png');
         this.load.image('star', 'img/star.png');
         this.load.image('grass', 'img/grass.png');

@@ -4,7 +4,7 @@ Maze.Game.prototype = {
 		// this.add.sprite(200, 200, 'main-menu');
 		this.currentlayer = 1;
 		this.numlevels = 3;
-		this.tweenspeed = 400;
+		this.tweenspeed = 100;
 		this.map = this.add.tilemap('maze');
         this.map.addTilesetImage('tile', 'tile');
         this.map.addTilesetImage('star', 'star');
@@ -27,7 +27,7 @@ Maze.Game.prototype = {
 		this.physics.arcade.enable(this.shaymin);
 		this.physics.arcade.enable(this.star);
 
-        this.shaymin.body.collideWorldBounds = true;
+        // this.shaymin.body.collideWorldBounds = true;
         this.movementForce = 32;
 		this.moving = 0;
 		this.cursors = this.input.keyboard.createCursorKeys();
@@ -136,21 +136,36 @@ Maze.Game.prototype = {
 	},
 
 	finishLevel: function() {
-		this.shaymin.body.x=0;
-		this.shaymin.body.y=0;
 		//this.shaymin.body.velocity.set(0,0);
 		
 		if (this.currentlayer < this.numlevels) {
 			this.currentlevel.destroy();
+			this.letters.destroy();
+			this.shaymin.destroy();
+			this.star.destroy();
 			this.currentlayer++;
 			this.currentlevel = this.map.createLayer('Tile Layer ' + this.currentlayer);
 			this.map.setCollision(1,true, this.currentlevel);
 
 		}
-		else 
+		else {
 			this.shaymin.kill();
 			//add an end state
 			//this.game.state.start('the end');
+		}
+		// this.shaymin.body.x=0;
+		// this.shaymin.body.y=0;
+		this.addLetters();
+
+		this.star = this.add.sprite(592, 592, 'star');
+        this.star.anchor.set(0.5);
+
+        this.shaymin = this.add.sprite(16,16, 'shaymin');
+        this.shaymin.anchor.set(0.5);
+
+        this.physics.startSystem(Phaser.Physics.ARCADE);
+		this.physics.arcade.enable(this.shaymin);
+		this.physics.arcade.enable(this.star);
 	},
 
 
@@ -163,11 +178,16 @@ Maze.Game.prototype = {
 		// 		// this.temp = this.add.sprite(32,32,'pokeball');
 		// 	}
 		// }
+		this.letters = this.add.group();
 		for (var i = 0; i < this.world.width / 32; i++) {
 			for (var j = 0; j < this.world.height / 32; j++) {
 				this.tileId = this.map.getTileWorldXY(i*32, j*32, 32, 32, this.currentlevel, true).index;
 				if (this.tileId == 3) {
 					this.temp = this.add.sprite(i*32, j*32, 'pokeball');
+					// this.rand = Math.random()*27 //27 for 0 to 26
+					//this.temp = this.add.sprite(i*32,j*32,);
+					//this.temp.frame = this.rand;
+					this.letters.add(this.temp);
 				}
 			}
 		}
@@ -199,6 +219,10 @@ Maze.Game.prototype = {
 		}
 		// this.temp = this.add.sprite(this.shaymin.body.x + this.xoffset, this.shaymin.body.y + this.yoffset,'shaymin');
 		// this.temp.visible = false;
+		if (this.shaymin.body.x + this.xoffset < 0 || this.shaymin.body.x + this.xoffset > this.world.width || 
+			this.shaymin.body.y + this.yoffset < 0 || this.shaymin.body.y + this.yoffset > this.world.height) {
+			return 0;
+		}
 		this.tileId = this.map.getTileWorldXY(this.shaymin.body.x + this.xoffset,
 			this.shaymin.body.y + this.yoffset, 32,32,this.currentlevel,true).index;
 		// this.temp.kill();
