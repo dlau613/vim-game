@@ -4,7 +4,7 @@ Maze.Game.prototype = {
 		// this.add.sprite(200, 200, 'main-menu');
 		this.currentlayer = 1;
 		this.numlevels = 3;
-		this.tweenspeed = 200;
+		this.tweenspeed = 400;
 		this.map = this.add.tilemap('maze');
         this.map.addTilesetImage('tile', 'tile');
         this.map.addTilesetImage('star', 'star');
