@@ -10,8 +10,7 @@ Maze.Preloader.prototype = {
         this.load.image('tile', 'img/tile.png');
         this.load.image('star', 'img/star.png');
         this.load.image('grass', 'img/grass.png');
-        //LOAD ALPHABET SPRITE SHEET
-        //this.load.spritesheet('alphabet', 'img/alphabet.png',32,32,26);
+        this.load.spritesheet('alphabet', 'img/alphabet.png',32,26);
 		// this.load.tilemap('maze2', 'img/test.json', null, Phaser.Tilemap.TILED_JSON);
   //       this.load.image('terrain_atlas', 'img/terrain_atlas.png');
 

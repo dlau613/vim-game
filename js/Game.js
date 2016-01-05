@@ -147,6 +147,17 @@ Maze.Game.prototype = {
 			this.currentlevel = this.map.createLayer('Tile Layer ' + this.currentlayer);
 			this.map.setCollision(1,true, this.currentlevel);
 
+			this.addLetters();
+
+			this.star = this.add.sprite(592, 592, 'star');
+	        this.star.anchor.set(0.5);
+
+	        this.shaymin = this.add.sprite(16,16, 'shaymin');
+	        this.shaymin.anchor.set(0.5);
+
+	        this.physics.startSystem(Phaser.Physics.ARCADE);
+			this.physics.arcade.enable(this.shaymin);
+			this.physics.arcade.enable(this.star);
 		}
 		else {
 			this.shaymin.kill();
@@ -155,17 +166,6 @@ Maze.Game.prototype = {
 		}
 		// this.shaymin.body.x=0;
 		// this.shaymin.body.y=0;
-		this.addLetters();
-
-		this.star = this.add.sprite(592, 592, 'star');
-        this.star.anchor.set(0.5);
-
-        this.shaymin = this.add.sprite(16,16, 'shaymin');
-        this.shaymin.anchor.set(0.5);
-
-        this.physics.startSystem(Phaser.Physics.ARCADE);
-		this.physics.arcade.enable(this.shaymin);
-		this.physics.arcade.enable(this.star);
 	},
 
 
@@ -179,15 +179,19 @@ Maze.Game.prototype = {
 		// 	}
 		// }
 		this.letters = this.add.group();
+		// this.physics.arcade.enable(this.letters);
 		for (var i = 0; i < this.world.width / 32; i++) {
 			for (var j = 0; j < this.world.height / 32; j++) {
 				this.tileId = this.map.getTileWorldXY(i*32, j*32, 32, 32, this.currentlevel, true).index;
 				if (this.tileId == 3) {
-					this.temp = this.add.sprite(i*32, j*32, 'pokeball');
-					// this.rand = Math.random()*27 //27 for 0 to 26
-					//this.temp = this.add.sprite(i*32,j*32,);
+					// this.temp = this.add.sprite(i*32, j*32, 'pokeball');
+					this.rand = Math.floor(Math.random()*28); //27 for 0 to 26
+					if (this.rand != 0) {
+					this.temp = this.add.sprite(i*32,j*32, 'alphabet', this.rand);
+					this.physics.arcade.enable(this.temp);
 					//this.temp.frame = this.rand;
 					this.letters.add(this.temp);
+					}
 				}
 			}
 		}
@@ -239,7 +243,12 @@ Maze.Game.prototype = {
 	},
 	moveDone: function() {
 		this.moving = 0;
+		this.physics.arcade.overlap(this.shaymin, this.letters, this.pickUpLetter, null, this);
 		this.physics.arcade.overlap(this.shaymin, this.star, this.finishLevel, null, this);
+	},
+
+	pickUpLetter: function(ball, letter) {
+		letter.destroy();
 	},
 };
 
