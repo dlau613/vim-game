@@ -219,9 +219,9 @@ Maze.Game.prototype = {
 		}
 		// this.temp = this.add.sprite(this.shaymin.body.x + this.xoffset, this.shaymin.body.y + this.yoffset,'shaymin');
 		// this.temp.visible = false;
-		if (this.shaymin.body.x + this.xoffset < 0 || this.shaymin.body.x + this.xoffset > this.world.width || 
-			this.shaymin.body.y + this.yoffset < 0 || this.shaymin.body.y + this.yoffset > this.world.height) {
-			return 0;
+		if (this.shaymin.body.x + this.xoffset < 0 || this.shaymin.body.x + this.xoffset >= this.world.width || 
+			this.shaymin.body.y + this.yoffset < 0 || this.shaymin.body.y + this.yoffset >= this.world.height) {
+			return 1;
 		}
 		this.tileId = this.map.getTileWorldXY(this.shaymin.body.x + this.xoffset,
 			this.shaymin.body.y + this.yoffset, 32,32,this.currentlevel,true).index;
