@@ -31,7 +31,7 @@ Maze.Game.prototype = {
         this.movementForce = 32;
 		this.moving = 0;
 		this.cursors = this.input.keyboard.createCursorKeys();
-
+		this.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
 		// this.cursors.down.onDown.add(move, this);
 
@@ -129,7 +129,7 @@ Maze.Game.prototype = {
 				this.tweenDown.onComplete.addOnce(this.moveDone, this);
 			}
 		}
-
+		this.physics.arcade.overlap(this.shaymin, this.letters, this.pickUpLetter, null, this);
 		// this.physics.arcade.collide(this.Maze, this.borderGroup, this.wallCollision, null, this);
 		// this.physics.arcade.collide(this.Maze, this.levels[this.level-1], this.wallCollision, null, this);
 		// this.physics.arcade.overlap(this.Maze, this.hole, this.finishLevel, null, this);
@@ -243,12 +243,13 @@ Maze.Game.prototype = {
 	},
 	moveDone: function() {
 		this.moving = 0;
-		this.physics.arcade.overlap(this.shaymin, this.letters, this.pickUpLetter, null, this);
+		// this.physics.arcade.overlap(this.shaymin, this.letters, this.pickUpLetter, null, this);
 		this.physics.arcade.overlap(this.shaymin, this.star, this.finishLevel, null, this);
 	},
 
 	pickUpLetter: function(ball, letter) {
-		letter.destroy();
+		if (this.space.isDown)
+			letter.destroy();
 	},
 };
 
