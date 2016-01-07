@@ -32,6 +32,7 @@ Maze.Game.prototype = {
 		this.moving = 0;
 		this.cursors = this.input.keyboard.createCursorKeys();
 		this.space = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		this.z = this.input.keyboard.addKey(Phaser.Keyboard.Z);
 
 		// this.cursors.down.onDown.add(move, this);
 
@@ -129,6 +130,10 @@ Maze.Game.prototype = {
 				this.tweenDown.onComplete.addOnce(this.moveDone, this);
 			}
 		}
+		if (this.z.isDown)
+		{
+			this.placeLetter();
+		}
 		this.physics.arcade.overlap(this.shaymin, this.letters, this.pickUpLetter, null, this);
 		// this.physics.arcade.collide(this.Maze, this.borderGroup, this.wallCollision, null, this);
 		// this.physics.arcade.collide(this.Maze, this.levels[this.level-1], this.wallCollision, null, this);
@@ -188,6 +193,7 @@ Maze.Game.prototype = {
 					this.rand = Math.floor(Math.random()*28); //27 for 0 to 26
 					if (this.rand != 0) {
 					this.temp = this.add.sprite(i*32,j*32, 'alphabet', this.rand);
+					this.temp.number = this.rand;
 					this.physics.arcade.enable(this.temp);
 					//this.temp.frame = this.rand;
 					this.letters.add(this.temp);
@@ -249,7 +255,16 @@ Maze.Game.prototype = {
 
 	pickUpLetter: function(ball, letter) {
 		if (this.space.isDown)
+		{
+			// this.awesome = this.letter.number;
 			letter.destroy();
+		}
+
 	},
+
+	placeLetter: function() {
+		this.temp2 = this.add.sprite(this.shaymin.body.x,this.shaymin.body.y, 'alphabet', this.awesome);
+		this.letters.add(this.temp2);
+	}
 };
 
