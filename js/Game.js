@@ -2,6 +2,9 @@ Maze.Game = function(game) {};
 Maze.Game.prototype = {
 	create: function() {
 		// this.add.sprite(200, 200, 'main-menu');
+		this.timer = 0;
+		this.totalTimer = 0;
+		this.time.events.loop(Phaser.Timer.SECOND, this.updateCounter, this);
 		this.currentlayer = 1;
 		this.numlevels = 3;
 		this.tweenspeed = 100;
@@ -23,6 +26,8 @@ Maze.Game.prototype = {
         this.shaymin = this.add.sprite(16,16, 'shaymin');
         this.shaymin.anchor.set(0.5);
 
+		this.timerText = this.add.text(20, 10, "Time: "+this.timer, this.fontBig);
+		this.totalTimeText = this.add.text(20,80, "Total time: "+this.totalTimer,this.fontSmall);
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 		this.physics.arcade.enable(this.shaymin);
 		this.physics.arcade.enable(this.star);
@@ -265,6 +270,11 @@ Maze.Game.prototype = {
 	placeLetter: function() {
 		this.temp2 = this.add.sprite(this.shaymin.body.x,this.shaymin.body.y, 'alphabet', this.awesome);
 		this.letters.add(this.temp2);
+	},
+	updateCounter: function() {
+		this.timer++;
+		this.timerText.setText("Time: "+this.timer);
+		this.totalTimeText.setText("Total time: "+(this.totalTimer+this.timer));
 	}
 };
 
