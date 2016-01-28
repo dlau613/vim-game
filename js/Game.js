@@ -2,6 +2,9 @@ Maze.Game = function(game) {};
 Maze.Game.prototype = {
 	create: function() {
 		// this.add.sprite(200, 200, 'main-menu');
+		// this.timerLayer = this.add.group();
+		// this.spriteLayer = this.add.group();
+		// this.letterLayer = this.add.group();
 		this.timer = 0;
 		this.totalTimer = 0;
 		this.time.events.loop(Phaser.Timer.SECOND, this.updateCounter, this);
@@ -19,15 +22,16 @@ Maze.Game.prototype = {
      	this.addLetters();
         // this.currentlevel.resizeWorld();
         // this.currentlevel.wrap = true;
-        
-        this.star = this.add.sprite(592, 592, 'star');
-        this.star.anchor.set(0.5);
+        this.addSprites();
+        // this.star = this.add.sprite(592, 592, 'star');
+        // this.star.anchor.set(0.5);
 
-        this.shaymin = this.add.sprite(16,16, 'shaymin');
-        this.shaymin.anchor.set(0.5);
+        // this.shaymin = this.add.sprite(16,16, 'shaymin');
+        // this.shaymin.anchor.set(0.5);
+        this.addTimers();
+		// this.timerText = this.add.text(20, 10, "Time: "+this.timer, this.fontBig);
+		// this.totalTimeText = this.add.text(20,60, "Total time: "+this.totalTimer,this.fontSmall);
 
-		this.timerText = this.add.text(20, 10, "Time: "+this.timer, this.fontBig);
-		this.totalTimeText = this.add.text(20,80, "Total time: "+this.totalTimer,this.fontSmall);
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 		this.physics.arcade.enable(this.shaymin);
 		this.physics.arcade.enable(this.star);
@@ -153,17 +157,17 @@ Maze.Game.prototype = {
 			this.letters.destroy();
 			this.shaymin.destroy();
 			this.star.destroy();
+			this.timerText.destroy();
+			this.totalTimeText.destroy();
 			this.currentlayer++;
 			this.currentlevel = this.map.createLayer('Tile Layer ' + this.currentlayer);
 			this.map.setCollision(1,true, this.currentlevel);
 
 			this.addLetters();
 
-			this.star = this.add.sprite(592, 592, 'star');
-	        this.star.anchor.set(0.5);
-
-	        this.shaymin = this.add.sprite(16,16, 'shaymin');
-	        this.shaymin.anchor.set(0.5);
+			this.addSprites();
+			this.timer = 0;
+			this.addTimers();
 
 	        this.physics.startSystem(Phaser.Physics.ARCADE);
 			this.physics.arcade.enable(this.shaymin);
@@ -171,6 +175,7 @@ Maze.Game.prototype = {
 		}
 		else {
 			this.shaymin.kill();
+			alert("Good job you finished! Your time was " + this.totalTimer);
 			//add an end state
 			//this.game.state.start('the end');
 		}
@@ -206,6 +211,20 @@ Maze.Game.prototype = {
 				}
 			}
 		}
+	},
+	addSprites: function() {
+		// this.sprites = this.add.group();
+
+		this.star = this.add.sprite(592, 592, 'star');
+        this.star.anchor.set(0.5);
+
+        this.shaymin = this.add.sprite(16,16, 'shaymin');
+        this.shaymin.anchor.set(0.5);
+	},
+	addTimers: function() {
+		var style = {font:"20px Arial", fill: "#ffffff"};
+		this.timerText = this.add.text(500, 10, "Time: "+this.timer, style);
+		this.totalTimeText = this.add.text(500,40, "Total time: "+this.totalTimer,style);
 	},
 	checkTile: function(dir) {
 		// this.tiles = this.currentlevel.getTiles(0, 0, this.world.width, this.world.height, false, false);
@@ -273,8 +292,9 @@ Maze.Game.prototype = {
 	},
 	updateCounter: function() {
 		this.timer++;
+		this.totalTimer++;
 		this.timerText.setText("Time: "+this.timer);
-		this.totalTimeText.setText("Total time: "+(this.totalTimer+this.timer));
+		this.totalTimeText.setText("Total time: "+(this.totalTimer));
 	}
 };
 

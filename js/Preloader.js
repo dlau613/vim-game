@@ -47,6 +47,6 @@ Maze.Preloader.prototype = {
 		// this.load.audio('audio-bounce', ['audio/bounce.ogg', 'audio/bounce.mp3', 'audio/bounce.m4a']);
 	},
 	create: function() {
-		this.game.state.start('MainMenu');
+		this.game.state.start('Game');
 	}
 };
