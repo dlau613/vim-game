@@ -1,3 +1,15 @@
 A 2D Maze Game built with the Phaser Framework
 
 Get Shaymin to the Star!
+
+Use the arrow keys to move.
+
+Can pick up letters using space
+
+Letters server no other purpose right now
+
+Trying to add lorem ipsum
+
+To set up a simple web server to run the game:
+python -m SimpleHTTPServer
+from http://goo.gl/ZOZDVl
